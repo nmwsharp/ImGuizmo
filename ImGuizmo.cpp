@@ -39,6 +39,8 @@
 #define _freea(x)
 #endif
 
+#include <vector>
+
 // includes patches for multiview from
 // https://github.com/CedricGuillemet/ImGuizmo/issues/15
 
@@ -3160,5 +3162,21 @@ namespace IMGUIZMO_NAMESPACE
 
       // restore view/projection because it was used to compute ray
       ComputeContext(svgView.m16, svgProjection.m16, gContext.mModelSource.m16, gContext.mMode);
+   }
+
+   // NSHARP: these are added to allow muliple context objects (necessary for Polyscope, which sometimes nests contexts)
+   std::vector<Context> mContextStack;
+   void PushContext() {
+      mContextStack.push_back(gContext);
+      gContext = Context();
+   }
+   void PopContext() {
+      if (!mContextStack.empty()) {
+         gContext = mContextStack.back();
+         mContextStack.pop_back();
+      }
+   }
+   void ClearContextStack() {
+      mContextStack.clear();
    }
 };

@@ -303,4 +303,8 @@ namespace IMGUIZMO_NAMESPACE
    };
 
    IMGUI_API Style& GetStyle();
+
+   IMGUI_API void PushContext();
+   IMGUI_API void PopContext();
+   IMGUI_API void ClearContextStack();
 }
