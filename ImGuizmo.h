@@ -266,6 +266,9 @@ namespace IMGUIZMO_NAMESPACE
    // from a x,y,z point in space and using Manipulation view/projection matrix, check if mouse is in pixel radius distance of that projected point
    IMGUI_API bool IsOver(float* position, float pixelRadius);
 
+   // NSHARP: added support for nonuniform scaling
+   IMGUI_API void SetAllowNonUniformScaling(bool value);
+
    enum COLOR
    {
       DIRECTION_X,      // directionColor[0]

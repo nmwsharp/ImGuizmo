@@ -762,6 +762,9 @@ namespace IMGUIZMO_NAMESPACE
       // check to not have multiple gizmo highlighted at the same time
       bool mbOverGizmoHotspot = false;
 
+      // NSHARP: added to allow non uniform scale
+      bool mAllowNonUniformScaling = true;
+
       ImGuiWindow* mAlternativeWindow = nullptr;
       ImVector<ImGuiID> mIDStack;
       ImGuiID mEditingID = -1;
@@ -1405,7 +1408,8 @@ namespace IMGUIZMO_NAMESPACE
 
       for (int i = 0; i < 3; i++)
       {
-         if(!Intersects(op, static_cast<OPERATION>(SCALE_X << i)))
+         // NSHARP: added support for nonuniform scaling
+         if(!Intersects(op, static_cast<OPERATION>(SCALE_X << i)) || !gContext.mAllowNonUniformScaling)
          {
             continue;
          }
@@ -1494,7 +1498,8 @@ namespace IMGUIZMO_NAMESPACE
 
       for (int i = 0; i < 3; i++)
       {
-         if (!Intersects(op, static_cast<OPERATION>(SCALE_XU << i)))
+         // NSHARP: added support for nonuniform scaling
+         if (!Intersects(op, static_cast<OPERATION>(SCALE_XU << i)) || !gContext.mAllowNonUniformScaling)
          {
             continue;
          }
@@ -1956,7 +1961,8 @@ namespace IMGUIZMO_NAMESPACE
       // compute
       for (int i = 0; i < 3 && type == MT_NONE; i++)
       {
-         if(!Intersects(op, static_cast<OPERATION>(SCALE_X << i)))
+         // NSHARP: added support for nonuniform scaling
+         if(!Intersects(op, static_cast<OPERATION>(SCALE_X << i)) || !gContext.mAllowNonUniformScaling)
          {
             continue;
          }
@@ -1998,7 +2004,8 @@ namespace IMGUIZMO_NAMESPACE
 
       for (int i = 0; i < 3 && type == MT_NONE; i++)
       {
-         if (!Intersects(op, static_cast<OPERATION>(SCALE_XU << i)))
+         // NSHARP: added support for nonuniform scaling
+         if (!Intersects(op, static_cast<OPERATION>(SCALE_XU << i)) || !gContext.mAllowNonUniformScaling)
          {
             continue;
          }
@@ -3168,6 +3175,11 @@ namespace IMGUIZMO_NAMESPACE
 
       // restore view/projection because it was used to compute ray
       ComputeContext(svgView.m16, svgProjection.m16, gContext.mModelSource.m16, gContext.mMode);
+   }
+
+   // NSHARP: added support for nonuniform scaling
+   IMGUI_API void SetAllowNonUniformScaling(bool value) {
+      gContext.mAllowNonUniformScaling = value;
    }
 
    // NSHARP: these are added to allow muliple context objects (necessary for Polyscope, which sometimes nests contexts)
