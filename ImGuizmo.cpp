@@ -1131,10 +1131,14 @@ namespace IMGUIZMO_NAMESPACE
       {
          ImU32 selectionColor = GetColorU32(SELECTION);
 
+         // nsharp: using this rather than white
+         // ImU32 bgColor = IM_COL32_WHITE;
+         ImU32 bgColor = IM_COL32(220, 220, 220, 255);
+
          switch (operation)
          {
          case TRANSLATE:
-            colors[0] = (type == MT_MOVE_SCREEN) ? selectionColor : IM_COL32_WHITE;
+            colors[0] = (type == MT_MOVE_SCREEN) ? selectionColor : bgColor;
             for (int i = 0; i < 3; i++)
             {
                colors[i + 1] = (type == (int)(MT_MOVE_X + i)) ? selectionColor : GetColorU32(DIRECTION_X + i);
@@ -1143,7 +1147,7 @@ namespace IMGUIZMO_NAMESPACE
             }
             break;
          case ROTATE:
-            colors[0] = (type == MT_ROTATE_SCREEN) ? selectionColor : IM_COL32_WHITE;
+            colors[0] = (type == MT_ROTATE_SCREEN) ? selectionColor : bgColor;
             for (int i = 0; i < 3; i++)
             {
                colors[i + 1] = (type == (int)(MT_ROTATE_X + i)) ? selectionColor : GetColorU32(DIRECTION_X + i);
@@ -1151,7 +1155,7 @@ namespace IMGUIZMO_NAMESPACE
             break;
          case SCALEU:
          case SCALE:
-            colors[0] = (type == MT_SCALE_XYZ) ? selectionColor : IM_COL32_WHITE;
+            colors[0] = (type == MT_SCALE_XYZ) ? selectionColor : bgColor;
             for (int i = 0; i < 3; i++)
             {
                colors[i + 1] = (type == (int)(MT_SCALE_X + i)) ? selectionColor : GetColorU32(DIRECTION_X + i);
